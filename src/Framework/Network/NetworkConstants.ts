@@ -1,0 +1,9 @@
+export enum NetworkRoomConstants {
+  PING,
+  PONG,
+  SET_PLAYER_PING,
+  SET_PLAYER_READY,
+  TRANSFORM_MOVEMENT_UPDATE,
+  NEW_CHAT_MESSAGE,
+  LEAVE,
+};
