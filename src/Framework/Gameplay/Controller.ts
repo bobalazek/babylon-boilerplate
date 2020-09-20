@@ -125,6 +125,12 @@ export class ThirdPersonController extends AbstractController {
           0,
           direction.z
         );
+        
+        this._posessedTransformNode.rotation = new Vector3(
+          0,
+          (Math.atan2(direction.z, direction.x) * -1) + Math.PI / 2,
+          0
+        );
       }
     }
   }
