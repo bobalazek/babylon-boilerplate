@@ -1,15 +1,17 @@
 # Babylon Boilerplate
 
-A boilerplate for BabylonJS
+A boilerplate for BabylonJS. Documentation coming soon!
 
 ## Installation
 
-TODO
+* Run: `yarn install`
+
 
 ## Development
 
-TODO
+* Run: `yarn start`
 
-## License
 
-Babylon Boilerplate is licensed under the MIT license.
+## Build
+
+* Run: `yarn build`
