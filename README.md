@@ -45,7 +45,7 @@ Because we always want to get the newest assets, especially when they change, we
 In your scene file, import the asset as following:
 
 ```javascript
-import vehicleModel from '../../Resources/assets/models/vehicle.glb'; // returns a URL string
+import vehicleModelAsset from '../../Resources/assets/models/vehicle.glb'; // returns a URL string
 ```
 
 And then, you can use it below to import it:
