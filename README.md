@@ -1,6 +1,6 @@
 # Babylon Boilerplate
 
-A boilerplate for BabylonJS. Documentation coming soon!
+A boilerplate for BabylonJS.
 
 ## Installation
 
@@ -12,25 +12,39 @@ A boilerplate for BabylonJS. Documentation coming soon!
 * Run: `yarn start`
 
 
+## Concepts
+
+### GameManager
+
+That is our main object in the game. It handles the boot up of the game & contains the main, static variables (engine, canvas element, input manager, currently active level, ...). You can use it all across your codebase, as all the important variables are static.
+
+
+#### GameManager - InputManager
+
+Handles all the input stuff for the keyboard, mouse & gamepad(-s). The most important methods here are are `GameManager.inputManager.getAxes()` and `GameManager.inputManager.getActions()`. It will return back the axes values & action booleans, that you specified as your input bindings.
+
+
+#### GameManager - InputManager - InputBindings
+
+This is the class, that will supply your input manager with your bindings. View the `src/Framework/Input/Bindings/InputBindingsDefault` class as an example.
+
+
 ### Scene
 
-The main class you'll need extend is the `AbstractScene` (or the `SceneInterface`) class, which can be found in `src/Framework/Scenes/Scene.ts`. The most important bits are:
+All your scenes should go inside the `src/Game/Scenes/` directory. Your scene class needs to extend the `src/Framework/Scenes/Scene.ts`. Your scene should then include the following methods:
 
-#### start()
+* `Scene::start()` - This will be executed once everything is ready and loaded.
+* `Scene::load()` - Can/should be used when preloading assets/resources. Must always return a promise.
+* `Scene::update()` - This method is ran on every tick, so you can use it for things like the PlayerController.
 
-In this function you'll normally just set the `babylonScene`.
 
-#### load()
+## Directory structure
 
-This function will return a promise once the scene is ready and loaded. Here inside you start the preloader, load all your assets, hide the preloader and resolve the promise.
-
-#### unload()
-
-This function can be used to detach possible listeners you have, that are only related to that scene. It is also a promise and will be triggered before you start loading a new scene, if any previous scene is loaded.
-
-#### update()
-
-This function is triggered each render loop/tick. Right now it updates the controller.
+* `src/`
+    * `src/Game/` - All of your unique game logic goes in here.
+    * `src/Game/index.ts` - The main file that boots up the game.
+    * `src/Game/Resources/` - All of your static assets, such as 3D models, CSS, audio and more.
+    * `src/Framework/` - All of your reusable game stuff goes in here. Think of it as a collection of classes, helpers, managers, ... that you'll be able to reuse in your next game.
 
 
 ## Build
