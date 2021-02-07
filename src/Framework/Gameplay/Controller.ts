@@ -10,12 +10,16 @@ import { GameManager } from '../Core/GameManager';
 export interface ControllerInterface {
   start(): void;
   update(): void;
+  enable(): void;
+  disable(): void;
   posessTransformNode(transformNode: TransformNode): void;
 }
 
 export class AbstractController implements ControllerInterface {
   public start() {}
   public update() {}
+  public enable() {}
+  public disable() {}
   public posessTransformNode(transformNode: TransformNode) {}
 }
 
@@ -25,17 +29,34 @@ export class ThirdPersonController extends AbstractController {
   public cameraBetaMultiplier: number = 0.0002;
   public cameraRadiusMultiplier: number = 0.002;
 
+  private _isEnabled: boolean = false;
   private _posessedTransformNode: TransformNode;
+
   private readonly _forward = new Vector3(0, 0, 1);
   private readonly _forwardInverted = new Vector3(0, 0, -1);
   private readonly _right = new Vector3(1, 0, 0);
   private readonly _rightInverted = new Vector3(-1, 0, 0);
 
   public start() {
-    GameManager.inputManager.setForcePointerLock(true);
+    const onPointerLockChange = () => {
+      if (GameManager.engine.isPointerLock) {
+        this.enable();
+      } else {
+        this.disable();
+      }
+    };
+
+    document.addEventListener('pointerlockchange', onPointerLockChange, false);
+    document.addEventListener('mspointerlockchange', onPointerLockChange, false);
+    document.addEventListener('mozpointerlockchange', onPointerLockChange, false);
+    document.addEventListener('webkitpointerlockchange', onPointerLockChange, false);
   }
 
   public update() {
+    if (!this._isEnabled) {
+      return;
+    }
+
     /***** Input *****/
     const inputAxes = GameManager.inputManager.axes;
 
@@ -94,8 +115,6 @@ export class ThirdPersonController extends AbstractController {
         }
       }
 
-      // TODO: rotate posessedTransformNode towards the direction it's moving
-
       if (
         inputLocation.x !== 0 ||
         inputLocation.y !== 0
@@ -125,7 +144,7 @@ export class ThirdPersonController extends AbstractController {
           0,
           direction.z
         );
-        
+
         this._posessedTransformNode.rotation = new Vector3(
           0,
           (Math.atan2(direction.z, direction.x) * -1) + Math.PI / 2,
@@ -133,6 +152,14 @@ export class ThirdPersonController extends AbstractController {
         );
       }
     }
+  }
+
+  public enable() {
+    this._isEnabled = true;
+  }
+
+  public disable() {
+    this._isEnabled = false;
   }
 
   public posessTransformNode(transformNode: TransformNode) {
