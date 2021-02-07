@@ -28,7 +28,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, 'src', 'Game', 'Resources'),
+        from: path.resolve(__dirname, 'public'),
         to: 'static',
         ignore: [
           'index.html', // already handled by HtmlWebpackPlugin
@@ -46,15 +46,34 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.css$/i,
+        test: /\.s[ac]ss$/i,
         use: [
+          { loader: MiniCssExtractPlugin.loader },
+          // { loader: 'style-loader' }, // for inline styles
+          { loader: 'css-loader' },
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: 'postcss-loader',
             options: {
-              esModule: true,
+              postcssOptions: {
+                plugins: [
+                  require('autoprefixer'),
+                ],
+              },
             },
           },
-          'css-loader',
+          { loader: 'sass-loader' },
+        ],
+      },
+      {
+        test: /\.(jpg|png|gif|env|dds|hdr|glb|gltf|stl)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: false,
+              name: 'static/media/[name].[hash].[ext]',
+            },
+          },
         ],
       },
     ]
