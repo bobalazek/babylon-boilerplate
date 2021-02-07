@@ -63,7 +63,7 @@ return new Promise((resolve, reject) => {
 });
 ```
 
-Same goes for all the other file types mentioned in webpacks's [url-loader](https://github.com/bobalazek/babylon-boilerplate/blob/master/webpack.common.js#L68). Note: if you want to add new file types there, you must also add them inside the ([declaration file](https://github.com/bobalazek/babylon-boilerplate/blob/master/src/declarations.d.ts).
+Same goes for all the other file types mentioned in webpacks's [url-loader](https://github.com/bobalazek/babylon-boilerplate/blob/master/webpack.common.js#L68). Note: if you want to add new file types there, you must also add them inside the [declaration file](https://github.com/bobalazek/babylon-boilerplate/blob/master/src/declarations.d.ts).
 
 
 ## Directory structure
