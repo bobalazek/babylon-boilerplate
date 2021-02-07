@@ -38,6 +38,34 @@ All your scenes should go inside the `src/Game/Scenes/` directory. Your scene cl
 * `Scene::update()` - This method is ran on every tick, so you can use it for things like the PlayerController.
 
 
+### Asset imports
+
+Because we always want to get the newest assets, especially when they change, we can do that easily by just adding the following:
+
+In your scene file, import the asset as following:
+
+```
+import vehicleModel from '../../Resources/assets/models/vehicle.glb'; // returns a URL string
+```
+
+And then, you can use it below to import it:
+
+```
+return new Promise((resolve, reject) => {
+  SceneLoader.LoadAssetContainer(
+    '',
+    vehicleModelAsset,
+    this.babylonScene,
+    (container: AssetContainer) => {
+      // do something with it
+    }
+  );
+});
+```
+
+Same goes for all the other file types mentioned in webpacks's [url-loader](https://github.com/bobalazek/babylon-boilerplate/blob/master/webpack.common.js#L68). Note: if you want to add new file types there, you must also add them inside the ([declaration file](https://github.com/bobalazek/babylon-boilerplate/blob/master/src/declarations.d.ts).
+
+
 ## Directory structure
 
 * `src/`
