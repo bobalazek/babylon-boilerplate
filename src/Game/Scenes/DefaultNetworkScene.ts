@@ -2,7 +2,7 @@ import {
   Vector3,
   MeshBuilder,
 } from 'babylonjs';
-import Cookies from 'js-cookie'
+import store from 'store';
 
 import { GameManager } from '../../Framework/Core/GameManager';
 import { AbstractNetworkScene } from '../../Framework/Scenes/NetworkScene';
@@ -29,18 +29,17 @@ export class DefaultNetworkScene extends AbstractNetworkScene {
 
       // Hide preloader
       GameManager.engine.hideLoadingUI();
+      
+      // Force pointer lock
+      GameManager.inputManager.setForcePointerLock(true);
 
       resolve(this);
     });
   }
 
   prepareNetwork() {
-    if (GameManager.isServer) {
-      return;
-    }
-
-    const lastNetworkRoomId = Cookies.get('lastNetworkRoomId');
-    const lastNetworkRoomSessionId = Cookies.get('lastNetworkRoomSessionId');
+    const lastNetworkRoomId = store.get('lastNetworkRoomId');
+    const lastNetworkRoomSessionId = store.get('lastNetworkRoomSessionId');
     if (
       lastNetworkRoomId &&
       lastNetworkRoomSessionId
@@ -60,22 +59,13 @@ export class DefaultNetworkScene extends AbstractNetworkScene {
   }
 
   prepareNetworkClientAndJoinLobbyRoom() {
-    if (GameManager.isServer) {
-      return;
-    }
-
-    this.prepareNetworkClientAndJoinRoom('lobby')
-      .then(() => {
-        this.prepareNetworkPing();
-        this.prepareNetworkToReplicateTransformsMovement();
-      });
+    this.prepareNetworkClientAndJoinRoom('lobby').then(() => {
+      this.prepareNetworkPing();
+      this.prepareNetworkToReplicateTransformsMovement();
+    });
   }
 
   prepareNetworkToReplicateTransformsMovement() {
-    if (GameManager.isServer) {
-      return;
-    }
-
     super.prepareNetworkToReplicateTransformsMovement();
 
     const networkRoomState = <RoomState>this.networkRoom.state;

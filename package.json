@@ -3,24 +3,24 @@
     "private": true,
     "scripts": {
         "start-client": "webpack-dev-server --config webpack.dev.js --inline --progress",
-        "start-server": "nodemon --legacy-watch --ext ts --watch src/Framework/Network --watch src/Game/Network --exec DEBUG=colyseus:* ts-node src/Game/server.ts",
+        "start-server": "nodemon --legacy-watch --ext ts --watch src/Game --exec \"ts-node --project tsconfig.server.json src/Game/server.ts\"",
         "start": "concurrently --kill-others \"npm run start-client\" \"npm run start-server\"",
         "build": "webpack --config webpack.prod.js --progress"
     },
     "dependencies": {
         "@colyseus/monitor": "^0.12.2",
-        "@types/js-cookie": "^2.2.6",
-        "babylonjs": "^4.2.0-alpha.17",
-        "babylonjs-gui": "^4.2.0-alpha.17",
-        "babylonjs-inspector": "^4.2.0-alpha.17",
-        "babylonjs-loaders": "^4.2.0-alpha.17",
-        "babylonjs-materials": "^4.2.0-alpha.17",
+        "autoprefixer": "^10.2.4",
+        "babylonjs": "^4.2.0",
+        "babylonjs-gui": "^4.2.0",
+        "babylonjs-inspector": "^4.2.0",
+        "babylonjs-loaders": "^4.2.0",
+        "babylonjs-materials": "^4.2.0",
         "colyseus": "^0.13.0",
         "colyseus.js": "^0.13.0",
         "cors": "^2.8.5",
         "express": "^4.17.1",
         "express-basic-auth": "^1.2.0",
-        "js-cookie": "^2.2.1",
+        "store": "^2.0.12",
         "ts-keycode-enum": "^1.0.6",
         "uuid": "^8.0.0",
         "xhr2": "^0.2.0"
@@ -43,6 +43,11 @@
         "webpack-cli": "^3.3.11",
         "webpack-dev-server": "^3.11.0",
         "webpack-merge": "^4.2.2"
+    },
+    "nodemonConfig": {
+        "env": {
+            "DEBUG": "colyseus:*"
+        }
     },
     "browserslist": [
         "> 0.5%",

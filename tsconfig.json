@@ -1,32 +1,14 @@
 {
     "compilerOptions": {
-        "target": "es2016",
-        "module": "commonjs",
-        "noResolve": false,
-        "noImplicitAny": false,
-        "removeComments": true,
-        "preserveConstEnums": true,
-        "sourceMap": true,
-        "experimentalDecorators": true,
-        "isolatedModules": false,
-        "esModuleInterop": true,
-        "lib": [
-            "dom",
-            "es2015.promise",
-            "es5",
-            "es6",
-        ],
-        "declaration": true,
-        "outDir": "dist"
+      "target": "ES5",
+      "sourceMap": true,
+      "esModuleInterop": true,
+      "experimentalDecorators": true
     },
-    "files": [
-        "./src/Game/index.ts"
-    ],
     "types": [
-        "babylonjs",
-        "babylonjs-gui",
-        "babylonjs-materials",
-        "babylonjs-loaders",
-        "babylonjs-inspector"
+      "babylonjs",
+      "babylonjs-loaders",
+      "babylonjs-gui"
     ]
-}
+  }
+  

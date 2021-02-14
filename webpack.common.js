@@ -10,7 +10,8 @@ module.exports = {
     app: path.resolve(__dirname, 'src', 'Game', 'index.ts'),
   },
   output: {
-    filename: '[name].[hash].js',
+    filename: 'static/js/[name].[hash:8].js',
+    chunkFilename: 'static/js/[name].[hash:8].chunk.js',
     path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
@@ -19,12 +20,9 @@ module.exports = {
   devtool: 'source-map',
   context: __dirname,
   plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src', 'Game', 'Resources', 'index.html'),
-    }),
     new MiniCssExtractPlugin(),
-    new webpack.ProvidePlugin({
-      // external deps here
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'public', 'index.html'),
     }),
     new CopyWebpackPlugin([
       {
@@ -34,9 +32,7 @@ module.exports = {
           'index.html', // already handled by HtmlWebpackPlugin
         ],
       },
-    ], {
-      copyUnmodified: true,
-    }),
+    ]),
   ],
   module: {
     rules: [
@@ -82,8 +78,5 @@ module.exports = {
     splitChunks: {
       chunks: 'all',
     },
-  },
-  node: {
-    fs: 'empty',
   },
 }

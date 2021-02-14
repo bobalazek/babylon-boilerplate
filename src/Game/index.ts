@@ -8,7 +8,6 @@ GameManager.boot({
   defaultScene: DefaultNetworkScene,
   controller: ThirdPersonController,
   inputBindings: ThirdPersonInputBindings,
-  isServer: false,
   canvasElementId: 'game',
   engineOptions: {
     stencil: true,

@@ -10,6 +10,7 @@ import {
   StandardMaterial,
   Texture,
   Tools,
+  Color3,
 } from 'babylonjs';
 import { SkyMaterial } from 'babylonjs-materials';
 
@@ -108,13 +109,11 @@ export abstract class AbstractScene implements SceneInterface {
 
     // Ground
     let ground = MeshBuilder.CreateGround('ground', {
-      width: 1024,
-      height: 1024,
+      width: 16,
+      height: 16,
     });
     let groundMaterial = new StandardMaterial('groundMaterial', this.babylonScene);
-    let groundTexture = new Texture('/static/textures/ground_diffuse.jpg', this.babylonScene);
-    groundTexture.uScale = groundTexture.vScale = 128;
-    groundMaterial.diffuseTexture = groundTexture;
+    groundMaterial.diffuseColor = new Color3(0.2, 0.2, 0.2);
     ground.material = groundMaterial;
   }
 

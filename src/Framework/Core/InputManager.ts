@@ -20,6 +20,12 @@ export class InputManager {
   private _gamepads: Array<InputGamepad> = [];
   private _forcePointerLock: boolean = false;
 
+  public isTouchDevice: boolean = (
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0 ||
+    navigator.msMaxTouchPoints > 0
+  );
+
   constructor() {
     this._keyboard = new InputKeyboard();
     this._mouse = new InputMouse();
@@ -84,12 +90,14 @@ export class InputManager {
   }
 
   public update() {
-    if (this._bindingsEnabled) {
-      this._keyboard.update();
-      this._mouse.update();
-      this._deviceOrientation.update();
-      this._gamepadManager.update();
+    if (!this._bindingsEnabled) {
+      return;
     }
+
+    this._keyboard.update();
+    this._mouse.update();
+    this._deviceOrientation.update();
+    this._gamepadManager.update();
   }
 
   public afterRender() {

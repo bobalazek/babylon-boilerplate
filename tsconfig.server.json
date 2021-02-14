@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "noResolve": false,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "isolatedModules": false,
+    "esModuleInterop": true,
+    "declaration": true
+  },
+  "types": [
+    "babylonjs",
+    "babylonjs-loaders",
+    "babylonjs-gui"
+  ]
+}
