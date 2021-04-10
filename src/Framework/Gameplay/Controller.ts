@@ -92,7 +92,7 @@ export class ThirdPersonController extends AbstractController {
 
     /***** Mesh & camera update *****/
     if (this._posessedTransformNode) {
-      const camera = <ArcRotateCamera>GameManager.scene.babylonScene.activeCamera;
+      const camera = <ArcRotateCamera>GameManager.scene.activeCamera;
 
       if (inputAxes['lookZoom']) {
         if (this.cameraUseInertia) {
@@ -119,10 +119,10 @@ export class ThirdPersonController extends AbstractController {
         inputLocation.x !== 0 ||
         inputLocation.y !== 0
       ) {
-        const rightVector = GameManager.scene.babylonScene.useRightHandedSystem
+        const rightVector = GameManager.scene.useRightHandedSystem
           ? this._rightInverted
           : this._right;
-        const forwardVector = GameManager.scene.babylonScene.useRightHandedSystem
+        const forwardVector = GameManager.scene.useRightHandedSystem
           ? this._forwardInverted
           : this._forward;
         const cameraRight = Vector3.TransformNormal(
@@ -165,7 +165,7 @@ export class ThirdPersonController extends AbstractController {
   public posessTransformNode(transformNode: TransformNode) {
     this._posessedTransformNode = transformNode;
 
-    const camera = <ArcRotateCamera>GameManager.scene.babylonScene.activeCamera;
+    const camera = <ArcRotateCamera>GameManager.scene.activeCamera;
     camera.lockedTarget = this._posessedTransformNode;
   }
 

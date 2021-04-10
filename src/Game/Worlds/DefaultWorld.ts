@@ -1,9 +1,9 @@
 import { MeshBuilder } from 'babylonjs';
 
 import { GameManager } from '../../Framework/Core/GameManager';
-import { AbstractScene } from '../../Framework/Scenes/Scene';
+import { AbstractWorld } from '../../Framework/Worlds/World';
 
-export class DefaultScene extends AbstractScene {
+export class DefaultWorld extends AbstractWorld {
   load() {
     return new Promise((resolve) => {
       // Show preloader
@@ -16,7 +16,7 @@ export class DefaultScene extends AbstractScene {
       this.prepareEnvironment();
       this.preparePlayer(playerCharacterId);
       this.controller.posessTransformNode(
-        this.babylonScene.getMeshByID(playerCharacterId)
+        this.scene.getMeshByID(playerCharacterId)
       );
 
       // Hide preloader

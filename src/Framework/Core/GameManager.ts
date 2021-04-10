@@ -10,15 +10,15 @@ import XMLHttpRequest from 'xhr2';
 import { InputManager } from './InputManager';
 import { ControllerInterface } from '../Gameplay/Controller';
 import { InputBindingsInterface } from '../Gameplay/InputBindings';
-import { SceneInterface } from '../Scenes/Scene';
+import { WorldInterface } from '../Worlds/World';
 
 export class GameManager {
   public static isServer: boolean = false;
   public static canvas: HTMLCanvasElement;
   public static engine: Engine;
-  public static babylonScene: Scene;
+  public static scene: Scene;
 
-  public static scene: SceneInterface;
+  public static world: WorldInterface;
   public static inputManager: InputManager;
   public static controller: ControllerInterface;
 
@@ -55,21 +55,21 @@ export class GameManager {
     }
     this.inputManager.bindEvents();
 
-    // Scene & controller
-    this.scene = new config.defaultScene();
+    // World & controller
+    this.world = new config.defaultWorld();
 
     this.setController(new config.controller());
-    this.setScene(this.scene);
+    this.setWorld(this.world);
 
     // Main render loop
     this.engine.runRenderLoop(() => {
-      if (!this.babylonScene) {
+      if (!this.scene) {
         return;
       }
 
       this.inputManager.update();
-      this.scene.update();
-      this.babylonScene.render();
+      this.world.update();
+      this.scene.render();
       this.inputManager.afterRender();
     });
 
@@ -98,47 +98,47 @@ export class GameManager {
   public static setController(controller: ControllerInterface): GameManager {
     this.controller = controller;
 
-    if (this.scene) {
-      this.scene.setController(this.controller);
+    if (this.world) {
+      this.world.setController(this.controller);
     }
 
     return this;
   }
 
-  public static setScene(scene: SceneInterface): GameManager {
-    this.scene = scene;
+  public static setWorld(world: WorldInterface): GameManager {
+    this.world = world;
 
-    this.prepareScene(this.scene);
+    this.prepareWorld(this.world);
 
     return this;
   }
 
-  public static prepareScene(scene?: SceneInterface): Promise<GameManager> {
-    if (!scene) {
-      scene = this.scene;
+  public static prepareWorld(world?: WorldInterface): Promise<GameManager> {
+    if (!world) {
+      world = this.world;
     }
 
-    if (!scene) {
-      throw new Error('No scene set');
+    if (!world) {
+      throw new Error('No world set');
     }
 
-    scene.setController(this.controller);
-    scene.start();
+    world.setController(this.controller);
+    world.start();
 
     return new Promise((resolve) => {
-      scene.load()
-        .then((scene: SceneInterface) => {
-          this.setBabylonScene(scene.babylonScene);
+      world.load()
+        .then((world: WorldInterface) => {
+          this.setScene(world.scene);
 
-          scene.afterLoadObservable.notifyObservers(scene);
+          world.afterLoadObservable.notifyObservers(world);
 
           resolve(this);
         });
     });
   }
 
-  public static setBabylonScene(scene: Scene): GameManager {
-    this.babylonScene = scene;
+  public static setScene(scene: Scene): GameManager {
+    this.scene = scene;
 
     return this;
   }
@@ -149,7 +149,7 @@ export class GameManager {
 }
 
 export interface GameConfigInterface {
-  defaultScene: new () => SceneInterface;
+  defaultWorld: new () => WorldInterface;
   controller?: new () => ControllerInterface;
   isServer?: boolean;
   canvasElementId?: string;

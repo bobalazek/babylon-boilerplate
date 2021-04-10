@@ -8,7 +8,6 @@ import {
   Mesh,
   MeshBuilder,
   StandardMaterial,
-  Texture,
   Tools,
   Color3,
 } from 'babylonjs';
@@ -17,9 +16,9 @@ import { SkyMaterial } from 'babylonjs-materials';
 import { ControllerInterface } from '../Gameplay/Controller';
 import { GameManager } from '../Core/GameManager';
 
-export interface SceneInterface {
-  babylonScene: Scene;
-  afterLoadObservable: Observable<SceneInterface>;
+export interface WorldInterface {
+  scene: Scene;
+  afterLoadObservable: Observable<WorldInterface>;
   controller: ControllerInterface;
   setController(controller: ControllerInterface): void;
   setActiveCamera(camera: Camera): void;
@@ -28,9 +27,9 @@ export interface SceneInterface {
   update(): void;
 }
 
-export abstract class AbstractScene implements SceneInterface {
-  public babylonScene: Scene;
-  public afterLoadObservable = new Observable<SceneInterface>();
+export abstract class AbstractWorld implements WorldInterface {
+  public scene: Scene;
+  public afterLoadObservable = new Observable<WorldInterface>();
   public controller: ControllerInterface;
 
   setController(controller: ControllerInterface) {
@@ -39,11 +38,11 @@ export abstract class AbstractScene implements SceneInterface {
   }
 
   setActiveCamera(camera: Camera) {
-    this.babylonScene.activeCamera = camera;
+    this.scene.activeCamera = camera;
   }
 
   start() {
-    this.babylonScene = new Scene(GameManager.engine);
+    this.scene = new Scene(GameManager.engine);
   }
 
   load() {
@@ -79,7 +78,7 @@ export abstract class AbstractScene implements SceneInterface {
       Tools.ToRadians(60),
       10,
       Vector3.Zero(),
-      this.babylonScene
+      this.scene
     );
 
     camera.lowerBetaLimit = Tools.ToRadians(10);
@@ -94,14 +93,14 @@ export abstract class AbstractScene implements SceneInterface {
     new HemisphericLight(
       'light',
       Vector3.Up(),
-      this.babylonScene
+      this.scene
     );
   }
 
   prepareEnvironment() {
     // Skybox
-    let skybox = Mesh.CreateBox('skybox', 1024, this.babylonScene);
-    var skyboxMaterial = new SkyMaterial('skyboxMaterial', this.babylonScene);
+    let skybox = Mesh.CreateBox('skybox', 1024, this.scene);
+    var skyboxMaterial = new SkyMaterial('skyboxMaterial', this.scene);
     skyboxMaterial.backFaceCulling = false;
     skyboxMaterial.useSunPosition = true;
     skyboxMaterial.sunPosition = new Vector3(0, 100, 0);
@@ -109,15 +108,15 @@ export abstract class AbstractScene implements SceneInterface {
 
     // Ground
     let ground = MeshBuilder.CreateGround('ground', {
-      width: 16,
-      height: 16,
+      width: 128,
+      height: 128,
     });
-    let groundMaterial = new StandardMaterial('groundMaterial', this.babylonScene);
+    let groundMaterial = new StandardMaterial('groundMaterial', this.scene);
     groundMaterial.diffuseColor = new Color3(0.2, 0.2, 0.2);
     ground.material = groundMaterial;
   }
 
   prepareInspector() {
-    this.babylonScene.debugLayer.show();
+    this.scene.debugLayer.show();
   }
 }

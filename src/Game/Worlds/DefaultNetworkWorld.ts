@@ -5,7 +5,7 @@ import {
 import store from 'store';
 
 import { GameManager } from '../../Framework/Core/GameManager';
-import { AbstractNetworkScene } from '../../Framework/Scenes/NetworkScene';
+import { AbstractNetworkWorld } from '../../Framework/Worlds/NetworkWorld';
 import { RoomState } from '../../Framework/Network/Schemas/RoomState';
 import { Transform } from '../../Framework/Network/Schemas/Transform';
 import {
@@ -13,7 +13,7 @@ import {
   GAME_SERVER_PORT,
 } from '../Config';
 
-export class DefaultNetworkScene extends AbstractNetworkScene {
+export class DefaultNetworkWorld extends AbstractNetworkWorld {
   public networkHost: string = GAME_SERVER_HOST;
   public networkPort: number = GAME_SERVER_PORT;
 
@@ -86,7 +86,7 @@ export class DefaultNetworkScene extends AbstractNetworkScene {
         return;
       }
 
-      let transformNode = this.babylonScene.getMeshByID(transform.id);
+      let transformNode = this.scene.getMeshByID(transform.id);
       if (!transformNode) {
         return;
       }
@@ -116,7 +116,7 @@ export class DefaultNetworkScene extends AbstractNetworkScene {
     };
 
     networkRoomState.transforms.onRemove = (transform: Transform, key: string) => {
-      let transformNode = this.babylonScene.getMeshByID(transform.id);
+      let transformNode = this.scene.getMeshByID(transform.id);
       if (!transformNode) {
         return;
       }

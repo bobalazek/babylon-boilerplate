@@ -14,7 +14,7 @@ module.exports = merge(common, {
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     port: 8080,
-    host: '0.0.0.0',
+    host: 'localhost',
     hot: true,
     sockPort: process.env.GAME_CLIENT_PORT_8080 || 8080,
     sockHost: 'localhost',

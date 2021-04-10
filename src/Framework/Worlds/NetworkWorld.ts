@@ -7,24 +7,25 @@ import { Client, Room } from 'colyseus.js';
 import store from 'store';
 
 import { GameManager } from '../Core/GameManager';
-import { AbstractScene } from './Scene';
+import { AbstractWorld } from './World';
 import { NetworkSerializer } from '../Network/NetworkSerializer';
 import { NetworkRoomConstants } from '../Network/NetworkConstants';
 
-export abstract class AbstractNetworkScene extends AbstractScene {
+export abstract class AbstractNetworkWorld extends AbstractWorld {
   public networkHost: string;
   public networkPort: number;
   public networkClient: Client;
   public networkRoom: Room;
   public networkRoomSessionId: string;
-  public readonly networkPingInterval: number = 5000; // in milliseconds
+  
+  public readonly networkPingInterval: number = 1000; // in milliseconds
   public readonly networkInterpolationSmooting: number = 0.2; // value between 0.1 to 1
   public readonly networkInterpolationLastUpdateTolerance: number = 1000; // in milliseconds; only interpolate if the last update is older less than this
 
   prepareNetworkClient() {
     if (!this.networkHost && !this.networkPort) {
       throw new Error(
-        'A networked room requires you to have `networkHost` and `networkPort` set in your scene class.'
+        'A networked room requires you to have `networkHost` and `networkPort` set in your world class.'
       );
     }
 
@@ -69,9 +70,10 @@ export abstract class AbstractNetworkScene extends AbstractScene {
   }
 
   prepareNetworkToReplicateTransformsMovement() {
-    GameManager.babylonScene.onBeforeRenderObservable.add(() => {
+    GameManager.scene.onBeforeRenderObservable.add(() => {
       const now = (new Date()).getTime();
-      const meshes = GameManager.babylonScene.meshes; // TODO: optimize
+      const meshes = GameManager.scene.meshes;
+
       for (let i = 0; i < meshes.length; i++) {
         let mesh = meshes[i];
         const meshMetadataNetwork = mesh.metadata && mesh.metadata.network
@@ -124,7 +126,7 @@ export abstract class AbstractNetworkScene extends AbstractScene {
     let lastUpdateTimeAgo = 0;
     let lastTransformNodeMatrix = null;
 
-    GameManager.babylonScene.onAfterRenderObservable.add(() => {
+    GameManager.scene.onAfterRenderObservable.add(() => {
       const now = (new Date()).getTime();
       lastUpdateTimeAgo += now - lastUpdate;
 
@@ -152,7 +154,7 @@ export abstract class AbstractNetworkScene extends AbstractScene {
     let lastUpdate = 0;
     let lastUpdateTimeAgo = 0;
 
-    GameManager.babylonScene.onAfterRenderObservable.add(() => {
+    GameManager.scene.onAfterRenderObservable.add(() => {
       const now = (new Date()).getTime();
       lastUpdateTimeAgo += now - lastUpdate;
 
