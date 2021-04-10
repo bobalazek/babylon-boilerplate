@@ -1,7 +1,16 @@
 import {
+  ArcRotateCamera,
   Vector3,
+  HemisphericLight,
+  Mesh,
   MeshBuilder,
+  StandardMaterial,
+  Tools,
+  Color3,
 } from 'babylonjs';
+import {
+  SkyMaterial,
+} from 'babylonjs-materials';
 import store from 'store';
 
 import { GameManager } from '../../Framework/Core/GameManager';
@@ -35,6 +44,56 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
 
       resolve(this);
     });
+  }
+
+  /***** Helpers *****/
+  prepareCamera() {
+    let camera = new ArcRotateCamera(
+      'camera',
+      Tools.ToRadians(0),
+      Tools.ToRadians(60),
+      10,
+      Vector3.Zero(),
+      this.scene
+    );
+
+    camera.lowerBetaLimit = Tools.ToRadians(10);
+    camera.upperBetaLimit = Tools.ToRadians(80);
+    camera.lowerRadiusLimit = 10;
+    camera.upperRadiusLimit = 20;
+
+    this.setActiveCamera(camera);
+  }
+
+  prepareLights() {
+    new HemisphericLight(
+      'light',
+      Vector3.Up(),
+      this.scene
+    );
+  }
+
+  prepareEnvironment() {
+    // Skybox
+    let skybox = Mesh.CreateBox('skybox', 1024, this.scene);
+    var skyboxMaterial = new SkyMaterial('skyboxMaterial', this.scene);
+    skyboxMaterial.backFaceCulling = false;
+    skyboxMaterial.useSunPosition = true;
+    skyboxMaterial.sunPosition = new Vector3(0, 100, 0);
+    skybox.material = skyboxMaterial;
+
+    // Ground
+    let ground = MeshBuilder.CreateGround('ground', {
+      width: 128,
+      height: 128,
+    });
+    let groundMaterial = new StandardMaterial('groundMaterial', this.scene);
+    groundMaterial.diffuseColor = new Color3(0.2, 0.2, 0.2);
+    ground.material = groundMaterial;
+  }
+
+  prepareInspector() {
+    this.scene.debugLayer.show();
   }
 
   prepareNetwork() {

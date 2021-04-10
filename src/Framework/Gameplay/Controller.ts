@@ -5,7 +5,9 @@ import {
   ArcRotateCamera,
 } from 'babylonjs';
 
-import { GameManager } from '../Core/GameManager';
+import {
+  GameManager,
+} from '../Core/GameManager';
 
 export interface ControllerInterface {
   start(): void;

@@ -2,7 +2,9 @@ import {
   Schema,
   type,
 } from '@colyseus/schema';
-import { Vector3 } from './Vector3';
+import {
+  Vector3,
+} from './Vector3';
 
 export class Transform extends Schema {
   @type("string")

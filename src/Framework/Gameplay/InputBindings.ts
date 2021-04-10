@@ -1,4 +1,6 @@
-import { Key as KeyboardKey } from 'ts-keycode-enum';
+import {
+  Key as KeyboardKey,
+} from 'ts-keycode-enum';
 
 import {
   InputDeviceEnum,

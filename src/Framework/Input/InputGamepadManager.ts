@@ -1,4 +1,6 @@
-import { GameManager } from '../Core/GameManager';
+import {
+  GameManager,
+} from '../Core/GameManager';
 import {
   InputDeviceInterface,
   InputMappingAxisGamepadDataInterface,
@@ -10,7 +12,9 @@ import {
   InputGamepadButtonEnum,
   InputGamepadButtonPropertyEnum,
 } from './InputConstants';
-import { InputGamepad } from './InputGamepad';
+import {
+  InputGamepad,
+} from './InputGamepad';
 import {
   InputBindingsInterface,
   AbstractInputBindings,

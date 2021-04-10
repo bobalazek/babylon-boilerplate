@@ -3,13 +3,24 @@ import {
   Vector3,
   Quaternion,
 } from 'babylonjs';
-import { Client, Room } from 'colyseus.js';
+import {
+  Client,
+  Room,
+} from 'colyseus.js';
 import store from 'store';
 
-import { GameManager } from '../Core/GameManager';
-import { AbstractWorld } from './World';
-import { NetworkSerializer } from '../Network/NetworkSerializer';
-import { NetworkRoomConstants } from '../Network/NetworkConstants';
+import {
+  GameManager,
+} from '../Core/GameManager';
+import {
+  AbstractWorld,
+} from './World';
+import {
+  NetworkSerializer,
+} from '../Network/NetworkSerializer';
+import {
+  NetworkRoomConstants,
+} from '../Network/NetworkConstants';
 
 export abstract class AbstractNetworkWorld extends AbstractWorld {
   public networkHost: string;

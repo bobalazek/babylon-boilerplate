@@ -1,6 +1,10 @@
-import { Observable } from 'babylonjs';
+import {
+  Observable,
+} from 'babylonjs';
 
-import { InputDeviceInterface } from './InputConstants';
+import {
+  InputDeviceInterface,
+} from './InputConstants';
 import {
   InputBindingsInterface,
   AbstractInputBindings,

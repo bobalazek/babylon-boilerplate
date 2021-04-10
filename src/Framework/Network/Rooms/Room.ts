@@ -1,8 +1,17 @@
-import { Room, Client } from 'colyseus';
+import {
+  Room,
+  Client,
+} from 'colyseus';
 
-import { NetworkSerializer } from '../NetworkSerializer';
-import { NetworkRoomConstants } from '../NetworkConstants';
-import { RoomState } from '../Schemas/RoomState';
+import {
+  NetworkSerializer,
+} from '../NetworkSerializer';
+import {
+  NetworkRoomConstants,
+} from '../NetworkConstants';
+import {
+  RoomState,
+} from '../Schemas/RoomState';
 
 export abstract class AbstractRoom extends Room {
   onCreate(options: any) {

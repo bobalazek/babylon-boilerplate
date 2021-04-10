@@ -5,9 +5,15 @@ import {
   type,
 } from '@colyseus/schema';
 
-import { Transform } from './Transform';
-import { Player } from './Player';
-import { ChatMessage } from './ChatMessage';
+import {
+  Transform,
+} from './Transform';
+import {
+  Player,
+} from './Player';
+import {
+  ChatMessage,
+} from './ChatMessage';
 
 export enum RoomStateStatus {
   PENDING,

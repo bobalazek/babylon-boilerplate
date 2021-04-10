@@ -1,12 +1,19 @@
 import express from 'express';
 import cors from 'cors';
 import basicAuth from 'express-basic-auth';
-import { createServer } from 'http';
-import { Server } from 'colyseus';
-import { monitor } from '@colyseus/monitor';
+import {
+  createServer,
+} from 'http';
+import {
+  Server,
+} from 'colyseus';
+import {
+  monitor,
+} from '@colyseus/monitor';
 
-import { LobbyRoom } from './Network/Rooms/LobbyRoom';
-
+import {
+  LobbyRoom,
+} from './Network/Rooms/LobbyRoom';
 import {
   GAME_SERVER_HOST,
   GAME_SERVER_PORT,

@@ -1,6 +1,10 @@
-import { Observable } from 'babylonjs';
+import {
+  Observable,
+} from 'babylonjs';
 
-import { GameManager } from '../Core/GameManager';
+import {
+  GameManager,
+} from '../Core/GameManager';
 import {
   InputDeviceInterface,
   InputMappingAxisMouseDataInterface,

@@ -7,10 +7,18 @@ import {
 } from 'babylonjs';
 import XMLHttpRequest from 'xhr2';
 
-import { InputManager } from './InputManager';
-import { ControllerInterface } from '../Gameplay/Controller';
-import { InputBindingsInterface } from '../Gameplay/InputBindings';
-import { WorldInterface } from '../Worlds/World';
+import {
+  InputManager,
+} from './InputManager';
+import {
+  ControllerInterface,
+} from '../Gameplay/Controller';
+import {
+  InputBindingsInterface,
+} from '../Gameplay/InputBindings';
+import {
+  WorldInterface,
+} from '../Worlds/World';
 
 export class GameManager {
   public static isServer: boolean = false;

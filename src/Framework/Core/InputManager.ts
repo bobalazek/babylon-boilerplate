@@ -1,11 +1,27 @@
-import { InputBindingsInterface } from '../Gameplay/InputBindings';
-import { InputModeEnum } from '../Input/InputConstants';
-import { InputKeyboard } from '../Input/InputKeyboard';
-import { InputMouse } from '../Input/InputMouse';
-import { InputDeviceOrientation } from '../Input/InputDeviceOrientation';
-import { InputGamepad } from '../Input/InputGamepad';
-import { InputGamepadManager } from '../Input/InputGamepadManager';
-import { AbstractInputBindings } from '../Gameplay/InputBindings';
+import {
+  InputBindingsInterface,
+} from '../Gameplay/InputBindings';
+import {
+  InputModeEnum,
+} from '../Input/InputConstants';
+import {
+  InputKeyboard,
+} from '../Input/InputKeyboard';
+import {
+  InputMouse,
+} from '../Input/InputMouse';
+import {
+  InputDeviceOrientation,
+} from '../Input/InputDeviceOrientation';
+import {
+  InputGamepad,
+} from '../Input/InputGamepad';
+import {
+  InputGamepadManager,
+} from '../Input/InputGamepadManager';
+import {
+  AbstractInputBindings,
+} from '../Gameplay/InputBindings';
 
 export class InputManager {
   private _bindingsEnabled: boolean = false;
