@@ -2,17 +2,11 @@
 
 A boilerplate for BabylonJS.
 
-## Installation
+## Commands
 
-* Run: `yarn install`
-
-## Development
-
-* Run: `yarn start`
-
-## Build
-
-* Run: `yarn build`
+* Installation: `yarn install`
+* Development: `yarn start`
+* Build: `yarn build`
 
 ## Directory structure
 
@@ -26,7 +20,7 @@ A boilerplate for BabylonJS.
 
 ### GameManager
 
-That is our main object in the game. It handles the boot up of the game & contains the main, static variables (engine, canvas element, input manager, currently active level, ...). You can use it all across your codebase, as all the important variables are static.
+That is our main object in the game. It handles the boot up of the game & contains the main, static variables (engine, canvas element, input manager, currently active world/level, ...). You can use it all across your codebase, as all the important variables are static.
 
 #### GameManager - InputManager
 
