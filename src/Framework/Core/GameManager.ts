@@ -5,7 +5,7 @@ import {
   NullEngineOptions,
   Scene,
 } from 'babylonjs';
-import XMLHttpRequest from 'xhr2';
+import { XMLHttpRequest } from 'xhr2';
 
 import {
   InputManager,
@@ -25,7 +25,7 @@ export class GameManager {
   public static parameters: any;
 
   public static isServer: boolean = false;
-  public static canvas: HTMLCanvasElement;
+  public static canvasElement: HTMLCanvasElement;
   public static engine: Engine;
   public static scene: Scene;
 
@@ -46,9 +46,18 @@ export class GameManager {
         this.config.serverEngineOptions
       );
     } else {
-      this.canvas = <HTMLCanvasElement>document.getElementById(this.config.canvasElementId);
+      this.canvasElement = this.config.canvasElement ?? null;
+      if (!this.canvasElement) {
+        const canvasElement = document.createElement('canvas');
+        canvasElement.id = 'canvas';
+
+        this.canvasElement = canvasElement;
+
+        document.body.appendChild(this.canvasElement);
+      }
+
       this.engine = new Engine(
-        this.canvas,
+        this.canvasElement,
         true,
         this.config.engineOptions,
         true
@@ -73,7 +82,7 @@ export class GameManager {
     if (config.controller) {
       this.setController(new config.controller());
     }
-  
+
     this.setWorld(this.world);
 
     // Main render loop
@@ -85,7 +94,7 @@ export class GameManager {
       if (this.inputManager) {
         this.inputManager.update();
       }
-      
+
       this.world.update();
       this.scene.render();
 
@@ -173,9 +182,9 @@ export class GameManager {
 
 export interface GameManagerConfigInterface {
   defaultWorld: new () => WorldInterface;
+  canvasElement?: HTMLCanvasElement;
   controller?: new () => ControllerInterface;
   isServer?: boolean;
-  canvasElementId?: string;
   engineOptions?: EngineOptions;
   serverEngineOptions?: NullEngineOptions;
   inputBindings?: new () => InputBindingsInterface;

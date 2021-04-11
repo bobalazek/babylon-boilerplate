@@ -27,9 +27,11 @@
         "express": "^4.17.1",
         "express-basic-auth": "^1.2.0",
         "html-webpack-plugin": "^3.2.0",
-        "mini-css-extract-plugin": "^0.9.0",
+        "mini-css-extract-plugin": "1.4.1",
         "nodemon": "^2.0.4",
         "raw-loader": "^4.0.2",
+        "sass": "^1.32.8",
+        "sass-loader": "10.1.1",
         "store": "^2.0.12",
         "terser-webpack-plugin": "^2.3.6",
         "ts-keycode-enum": "^1.0.6",
@@ -42,7 +44,7 @@
         "webpack-cli": "^3.3.11",
         "webpack-dev-server": "^3.11.0",
         "webpack-merge": "^4.2.2",
-        "xhr2": "^0.2.0"
+        "xhr2": "^0.2.1"
     },
     "nodemonConfig": {
         "env": {

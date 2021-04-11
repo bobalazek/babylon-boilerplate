@@ -12,11 +12,13 @@ import {
   DefaultNetworkWorld,
 } from './Worlds/DefaultNetworkWorld';
 
+const canvasElement = <HTMLCanvasElement>document.getElementById('canvas');
+
 GameManager.boot({
   defaultWorld: DefaultNetworkWorld,
+  canvasElement,
   controller: ThirdPersonController,
   inputBindings: ThirdPersonInputBindings,
-  canvasElementId: 'game',
   engineOptions: {
     stencil: true,
   },

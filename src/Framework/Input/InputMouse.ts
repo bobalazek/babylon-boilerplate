@@ -61,37 +61,37 @@ export class InputMouse implements InputDeviceInterface {
   }
 
   public bindEvents() {
-    GameManager.canvas.addEventListener(
+    GameManager.canvasElement.addEventListener(
       'mousemove',
       this._onHandleMove.bind(this),
       false
     );
-    GameManager.canvas.addEventListener(
+    GameManager.canvasElement.addEventListener(
       'pointermove',
       this._onHandleMove.bind(this),
       false
     );
-    GameManager.canvas.addEventListener(
+    GameManager.canvasElement.addEventListener(
       'mouseup',
       this._onHandleUpDown.bind(this),
       false
     );
-    GameManager.canvas.addEventListener(
+    GameManager.canvasElement.addEventListener(
       'pointerup',
       this._onHandleUpDown.bind(this),
       false
     );
-    GameManager.canvas.addEventListener(
+    GameManager.canvasElement.addEventListener(
       'mousedown',
       this._onHandleUpDown.bind(this),
       false
     );
-    GameManager.canvas.addEventListener(
+    GameManager.canvasElement.addEventListener(
       'pointerdown',
       this._onHandleUpDown.bind(this),
       false
     );
-    GameManager.canvas.addEventListener(
+    GameManager.canvasElement.addEventListener(
       'wheel',
       this._onHandleWheel.bind(this),
       false
@@ -99,37 +99,37 @@ export class InputMouse implements InputDeviceInterface {
   }
 
   public unbindEvents() {
-    GameManager.canvas.removeEventListener(
+    GameManager.canvasElement.removeEventListener(
       'mousemove',
       this._onHandleMove.bind(this),
       false
     );
-    GameManager.canvas.removeEventListener(
+    GameManager.canvasElement.removeEventListener(
       'pointermove',
       this._onHandleMove.bind(this),
       false
     );
-    GameManager.canvas.removeEventListener(
+    GameManager.canvasElement.removeEventListener(
       'mouseup',
       this._onHandleUpDown.bind(this),
       false
     );
-    GameManager.canvas.removeEventListener(
+    GameManager.canvasElement.removeEventListener(
       'pointerup',
       this._onHandleUpDown.bind(this),
       false
     );
-    GameManager.canvas.removeEventListener(
+    GameManager.canvasElement.removeEventListener(
       'mousedown',
       this._onHandleUpDown.bind(this),
       false
     );
-    GameManager.canvas.removeEventListener(
+    GameManager.canvasElement.removeEventListener(
       'pointerdown',
       this._onHandleUpDown.bind(this),
       false
     );
-    GameManager.canvas.removeEventListener(
+    GameManager.canvasElement.removeEventListener(
       'wheel',
       this._onHandleWheel.bind(this),
       false

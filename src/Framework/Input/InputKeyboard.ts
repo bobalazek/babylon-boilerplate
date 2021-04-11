@@ -61,12 +61,12 @@ export class InputKeyboard implements InputDeviceInterface {
   }
 
   public bindEvents() {
-    GameManager.canvas.addEventListener(
+    GameManager.canvasElement.addEventListener(
       'keydown',
       this._onHandle.bind(this),
       false
     );
-    GameManager.canvas.addEventListener(
+    GameManager.canvasElement.addEventListener(
       'keyup',
       this._onHandle.bind(this),
       false
@@ -74,12 +74,12 @@ export class InputKeyboard implements InputDeviceInterface {
   }
 
   public unbindEvents() {
-    GameManager.canvas.removeEventListener(
+    GameManager.canvasElement.removeEventListener(
       'keydown',
       this._onHandle.bind(this),
       false
     );
-    GameManager.canvas.removeEventListener(
+    GameManager.canvasElement.removeEventListener(
       'keyup',
       this._onHandle.bind(this),
       false
