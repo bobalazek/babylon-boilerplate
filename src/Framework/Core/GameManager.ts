@@ -21,32 +21,36 @@ import {
 } from '../Worlds/World';
 
 export class GameManager {
+  public static config: GameManagerConfigInterface;
+  public static parameters: any;
+
   public static isServer: boolean = false;
   public static canvas: HTMLCanvasElement;
   public static engine: Engine;
   public static scene: Scene;
 
   public static world: WorldInterface;
-  public static inputManager: InputManager;
-  public static controller: ControllerInterface;
+  public static inputManager?: InputManager;
+  public static controller?: ControllerInterface;
 
-  public static parameters: any;
+  public static boot(config: GameManagerConfigInterface, parameters?: any): GameManager {
+    this.config = config;
+    this.parameters = parameters;
 
-  public static boot(config: GameConfigInterface, parameters?: any): GameManager {
-    if (config.isServer) {
+    if (this.config.isServer) {
       (<any>global).XMLHttpRequest = XMLHttpRequest;
 
       this.isServer = true;
 
       this.engine = new NullEngine(
-        config.serverEngineOptions
+        this.config.serverEngineOptions
       );
     } else {
-      this.canvas = <HTMLCanvasElement>document.getElementById(config.canvasElementId);
+      this.canvas = <HTMLCanvasElement>document.getElementById(this.config.canvasElementId);
       this.engine = new Engine(
         this.canvas,
         true,
-        config.engineOptions,
+        this.config.engineOptions,
         true
       );
     }
@@ -55,18 +59,21 @@ export class GameManager {
     this.parameters = parameters;
 
     // Input manager
-    this.inputManager = new InputManager();
     if (config.inputBindings) {
+      this.inputManager = new InputManager();
       this.inputManager.setBindings(
         new config.inputBindings()
       );
+      this.inputManager.bindEvents();
     }
-    this.inputManager.bindEvents();
 
     // World & controller
     this.world = new config.defaultWorld();
 
-    this.setController(new config.controller());
+    if (config.controller) {
+      this.setController(new config.controller());
+    }
+  
     this.setWorld(this.world);
 
     // Main render loop
@@ -75,10 +82,16 @@ export class GameManager {
         return;
       }
 
-      this.inputManager.update();
+      if (this.inputManager) {
+        this.inputManager.update();
+      }
+      
       this.world.update();
       this.scene.render();
-      this.inputManager.afterRender();
+
+      if (this.inputManager) {
+        this.inputManager.afterRender();
+      }
     });
 
     /***** Events *****/
@@ -86,15 +99,17 @@ export class GameManager {
       this.engine.resize();
     });
 
-    window.addEventListener('focus', () => {
-      this.inputManager.bindEvents();
-    });
+    if (this.inputManager) {
+      window.addEventListener('focus', () => {
+        this.inputManager.bindEvents();
+      });
 
-    window.addEventListener('blur', () => {
-      this.inputManager.unbindEvents();
-    });
+      window.addEventListener('blur', () => {
+        this.inputManager.unbindEvents();
+      });
+    }
 
-    if (config.disableRightClick) {
+    if (this.config.disableRightClick) {
       window.addEventListener('contextmenu', (e) => {
         e.preventDefault();
       });
@@ -156,7 +171,7 @@ export class GameManager {
   }
 }
 
-export interface GameConfigInterface {
+export interface GameManagerConfigInterface {
   defaultWorld: new () => WorldInterface;
   controller?: new () => ControllerInterface;
   isServer?: boolean;

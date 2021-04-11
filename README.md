@@ -6,15 +6,15 @@ A boilerplate for BabylonJS.
 
 * Installation: `yarn install`
 * Development: `yarn start`
-* Build: `yarn build`
+* Production build: `yarn build`
 
 ## Directory structure
 
 * `src/`
   * `src/Game/` - All of your unique game logic goes in here.
   * `src/Game/index.ts` - The main file that boots up the game.
-  * `src/Game/Resources/` - All of your static assets, such as 3D models, CSS, audio and more.
   * `src/Framework/` - All of your reusable game stuff goes in here. Think of it as a collection of classes, helpers, managers, ... that you'll be able to reuse in your next game.
+  * `src/Resources/` - All of your static assets, such as 3D models, CSS, audio and more.
 
 ## Concepts
 
