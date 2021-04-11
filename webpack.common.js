@@ -61,7 +61,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(jpg|png|gif|env|dds|hdr|glb|gltf|stl)$/i,
+        test: /\.(jpg|png|gif|env|dds|hdr|glb|gltf)$/i,
         use: [
           {
             loader: 'url-loader',
@@ -72,7 +72,15 @@ module.exports = {
           },
         ],
       },
-    ]
+      {
+        test: /\.fx/i,
+        use: [
+          {
+            loader: 'raw-loader',
+          },
+        ],
+      },
+    ],
   },
   optimization: {
     splitChunks: {

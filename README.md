@@ -11,10 +11,10 @@ A boilerplate for BabylonJS.
 ## Directory structure
 
 * `src/`
-    * `src/Game/` - All of your unique game logic goes in here.
-    * `src/Game/index.ts` - The main file that boots up the game.
-    * `src/Game/Resources/` - All of your static assets, such as 3D models, CSS, audio and more.
-    * `src/Framework/` - All of your reusable game stuff goes in here. Think of it as a collection of classes, helpers, managers, ... that you'll be able to reuse in your next game.
+  * `src/Game/` - All of your unique game logic goes in here.
+  * `src/Game/index.ts` - The main file that boots up the game.
+  * `src/Game/Resources/` - All of your static assets, such as 3D models, CSS, audio and more.
+  * `src/Framework/` - All of your reusable game stuff goes in here. Think of it as a collection of classes, helpers, managers, ... that you'll be able to reuse in your next game.
 
 ## Concepts
 
@@ -38,29 +38,60 @@ All your worlds should go inside the `src/Game/Worlds/` directory. Your world cl
 * `World::load()` - Can/should be used when preloading assets/resources. Must always return a promise.
 * `World::update()` - This method is ran on every tick, so you can use it for things like the PlayerController.
 
-### Asset imports
+### Model/texture usage
 
 Because we always want to get the newest assets, especially when they change, we can do that easily by just adding the following:
 
 In your world file, import the asset as following:
 
 ```javascript
-import vehicleModelAsset from '../../Resources/assets/models/vehicle.glb'; // returns a URL string
-```
+import vehicleModelUrl from '../../Resources/models/vehicle.glb';
 
-And then, you can use it below to import it:
-
-```javascript
 return new Promise((resolve, reject) => {
   SceneLoader.LoadAssetContainer(
     '',
     vehicleModelAsset,
     this.scene,
     (container: AssetContainer) => {
-      // do something with it
+      // Do something with it
     }
   );
 });
+```
+
+### Shader usage
+
+```javascript
+import defaultFragmentShader from '../../Resources/shaders/default.fragment.fx';
+import defaultVertexShader from '../../Resources/shaders/default.vertex.fx';
+
+// https://doc.babylonjs.com/advanced_topics/introToShaders/shaderMaterial
+const shaderMaterial = new ShaderMaterial(
+  'shaderMaterial',
+  GameManager.scene,
+  {
+    fragmentSource: defaultFragmentShader,
+    vertexSource: defaultVertexShader,
+  },
+  {
+    attributes: [
+      'position',
+      'normal',
+      'uv',
+    ],
+    uniforms: [
+      'world',
+      'worldView',
+      'worldViewProjection',
+      'view',
+      'projection',
+      'time',
+      'direction',
+    ],
+    needAlphaBlending: true,
+    needAlphaTesting: true,
+  }
+);
 ```
 
 Same goes for all the other file types mentioned in webpacks's [url-loader](https://github.com/bobalazek/babylon-boilerplate/blob/master/webpack.common.js#L68). Note: if you want to add new file types there, you must also add them inside the [declaration file](https://github.com/bobalazek/babylon-boilerplate/blob/master/src/declarations.d.ts).

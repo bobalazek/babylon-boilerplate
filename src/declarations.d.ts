@@ -6,4 +6,4 @@ declare module '*.dds';
 declare module '*.hdr';
 declare module '*.glb';
 declare module '*.gltf';
-declare module '*.stl';
+declare module '*.fx';
