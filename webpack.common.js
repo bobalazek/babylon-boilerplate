@@ -1,45 +1,25 @@
 const path = require('path');
-
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
     main: './src/index.ts',
   },
-  output: {
-    filename: 'static/js/[name].[hash:8].js',
-    chunkFilename: 'static/js/[name].[hash:8].chunk.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js']
-  },
-  devtool: 'source-map',
-  context: __dirname,
-  plugins: [
-    new MiniCssExtractPlugin(),
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: './public/index.html',
-    }),
-    new CopyWebpackPlugin([
-      {
-        from: './public',
-        to: 'static',
-        ignore: [
-          'index.html', // already handled by HtmlWebpackPlugin
-        ],
-      },
-    ]),
-  ],
   module: {
     rules: [
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        options: {
+          compilerOptions: {
+            sourceMap: true,
+            esModuleInterop: true,
+          },
+        },
       },
       {
         test: /\.s[ac]ss$/i,
@@ -56,7 +36,7 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: false,
-              name: 'static/media/[name].[hash].[ext]',
+              name: 'static/resources/[name].[hash:8].[ext]',
             },
           },
         ],
@@ -71,9 +51,43 @@ module.exports = {
       },
     ],
   },
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
-}
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'static/css/[name].[contenthash:8].css',
+      chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+    }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: './public/index.html',
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: './public',
+          to: './',
+          globOptions: {
+            dot: true,
+            gitignore: true,
+            ignore: [
+              '*.html', // already handled by HtmlWebpackPlugin above
+            ],
+          },
+        },
+      ],
+      options: {
+        concurrency: 100,
+      },
+    }),
+    new CleanWebpackPlugin({
+      cleanStaleWebpackAssets: false,
+    }),
+  ],
+  output: {
+    filename: 'static/js/[name].[fullhash:8].js',
+    chunkFilename: 'static/js/[name].[fullhash:8].chunk.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+};

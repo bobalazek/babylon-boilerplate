@@ -6,7 +6,7 @@ if (typeof window !== 'undefined') {
   GAME_SERVER_HOST = window.location.hostname;
 }
 
-if (process) {
+if (typeof process !== 'undefined') {
   if (process.env.GAME_SERVER_HOST) {
     GAME_SERVER_HOST = process.env.GAME_SERVER_HOST;
   }
