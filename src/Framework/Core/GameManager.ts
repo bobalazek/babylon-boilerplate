@@ -25,7 +25,7 @@ export class GameManager {
   public static parameters: any;
 
   public static isServer: boolean = false;
-  public static canvasElement: HTMLCanvasElement;
+  public static canvasElement: HTMLCanvasElement | null;
   public static engine: Engine;
   public static scene: Scene;
 
