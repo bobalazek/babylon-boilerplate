@@ -2,7 +2,6 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -62,24 +61,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: './public/index.html',
-    }),
-    new CopyPlugin({
-      patterns: [
-        {
-          from: './public',
-          to: './',
-          globOptions: {
-            dot: true,
-            gitignore: true,
-            ignore: [
-              '**/*.html', // already handled by HtmlWebpackPlugin above
-            ],
-          },
-        },
-      ],
-      options: {
-        concurrency: 100,
-      },
     }),
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
