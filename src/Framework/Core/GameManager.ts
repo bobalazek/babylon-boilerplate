@@ -158,14 +158,13 @@ export class GameManager {
     world.start();
 
     return new Promise((resolve) => {
-      world.load()
-        .then((world: WorldInterface) => {
-          this.setScene(world.scene);
+      world.load().then((world: WorldInterface) => {
+        this.setScene(world.scene);
 
-          world.afterLoadObservable.notifyObservers(world);
+        world.afterLoadObservable.notifyObservers(world);
 
-          resolve(this);
-        });
+        resolve(this);
+      });
     });
   }
 
