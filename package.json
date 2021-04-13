@@ -5,7 +5,7 @@
         "start": "concurrently --kill-others \"npm run start-client\" \"npm run start-server\"",
         "build": "webpack --config webpack.prod.js --progress"
     },
-    "devDependencies": {
+    "dependencies": {
         "@colyseus/monitor": "^0.12.2",
         "@types/cors": "^2.8.6",
         "@types/express": "^4.17.6",
