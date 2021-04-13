@@ -8,6 +8,9 @@ import {
 import { XMLHttpRequest } from 'xhr2';
 
 import {
+  LoadingScreen,
+} from './LoadingScreen';
+import {
   InputManager,
 } from './InputManager';
 import {
@@ -62,10 +65,10 @@ export class GameManager {
         this.config.engineOptions,
         true
       );
+      
+      // Loading screen
+      this.engine.loadingScreen = new LoadingScreen();
     }
-
-    // Parameters
-    this.parameters = parameters;
 
     // Input manager
     if (config.inputBindings) {
