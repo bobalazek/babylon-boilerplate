@@ -51,7 +51,7 @@ export class DefaultWorld extends AbstractWorld {
     camera.lowerRadiusLimit = 10;
     camera.upperRadiusLimit = 20;
 
-    this.setActiveCamera(camera);
+    this.scene.activeCamera = camera;
   }
 
   prepareLights() {

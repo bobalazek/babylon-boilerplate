@@ -19,7 +19,6 @@ export interface WorldInterface {
   load(): Promise<WorldInterface>;
   update(): void;
   setController(controller: ControllerInterface): void;
-  setActiveCamera(camera: Camera): void;
 }
 
 export abstract class AbstractWorld implements WorldInterface {
@@ -46,9 +45,5 @@ export abstract class AbstractWorld implements WorldInterface {
   setController(controller: ControllerInterface) {
     this.controller = controller;
     this.controller.start();
-  }
-
-  setActiveCamera(camera: Camera) {
-    this.scene.activeCamera = camera;
   }
 }
