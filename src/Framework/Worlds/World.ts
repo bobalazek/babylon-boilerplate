@@ -15,17 +15,33 @@ export interface WorldInterface {
   scene: Scene;
   afterLoadObservable: Observable<WorldInterface>;
   controller: ControllerInterface;
-  setController(controller: ControllerInterface): void;
-  setActiveCamera(camera: Camera): void;
   start(): void;
   load(): Promise<any>;
   update(): void;
+  setController(controller: ControllerInterface): void;
+  setActiveCamera(camera: Camera): void;
 }
 
 export abstract class AbstractWorld implements WorldInterface {
   public scene: Scene;
   public afterLoadObservable = new Observable<WorldInterface>();
   public controller: ControllerInterface;
+
+  start() {
+    this.scene = new Scene(GameManager.engine);
+  }
+
+  load() {
+    return new Promise((resolve) => {
+      // Do your own logic here
+
+      resolve(this);
+    });
+  }
+
+  update() {
+    this.controller.update();
+  }
 
   setController(controller: ControllerInterface) {
     this.controller = controller;
@@ -34,21 +50,5 @@ export abstract class AbstractWorld implements WorldInterface {
 
   setActiveCamera(camera: Camera) {
     this.scene.activeCamera = camera;
-  }
-
-  start() {
-    this.scene = new Scene(GameManager.engine);
-  }
-
-  load() {
-    return new Promise((resolve) => {
-      // Do your own logic in sub-class here
-
-      resolve(this);
-    });
-  }
-
-  update() {
-    this.controller.update();
   }
 }
