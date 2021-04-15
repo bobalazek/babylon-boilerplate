@@ -65,7 +65,7 @@ export class GameManager {
         this.config.engineOptions,
         true
       );
-      
+
       // Loading screen
       this.engine.loadingScreen = new LoadingScreen();
     }
@@ -140,41 +140,21 @@ export class GameManager {
     return this;
   }
 
-  public static setWorld(world: WorldInterface): GameManager {
+  public static setWorld(world: WorldInterface): Promise<GameManager> {
     this.world = world;
 
-    this.prepareWorld(this.world);
-
-    return this;
-  }
-
-  public static prepareWorld(world?: WorldInterface): Promise<GameManager> {
-    if (!world) {
-      world = this.world;
-    }
-
-    if (!world) {
-      throw new Error('No world set');
-    }
-
-    world.setController(this.controller);
-    world.start();
+    this.world.setController(this.controller);
+    this.world.start();
 
     return new Promise((resolve) => {
-      (world as WorldInterface).load().then((world: WorldInterface) => {
-        this.setScene(world.scene);
+      this.world.load().then((loadedWorld: WorldInterface) => {
+        this.scene = loadedWorld.scene;
 
-        world.afterLoadObservable.notifyObservers(world);
+        loadedWorld.afterLoadObservable.notifyObservers(loadedWorld);
 
         resolve(this);
       });
     });
-  }
-
-  public static setScene(scene: Scene): GameManager {
-    this.scene = scene;
-
-    return this;
   }
 
   public static isSupported(): boolean {
