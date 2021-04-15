@@ -156,10 +156,6 @@ export class GameManager {
       });
     });
   }
-
-  public static isSupported(): boolean {
-    return Engine.isSupported();
-  }
 }
 
 export interface GameManagerConfigInterface {
