@@ -27,11 +27,14 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
   public networkHost: string = GAME_SERVER_HOST;
   public networkPort: number = GAME_SERVER_PORT;
 
+  start() {
+    super.start();
+
+    GameManager.engine.displayLoadingUI();
+  }
+
   load(): Promise<WorldInterface> {
     return new Promise((resolve) => {
-      // Show preloader
-      GameManager.engine.displayLoadingUI();
-
       this.prepareCamera();
       this.prepareLights();
       this.prepareEnvironment();

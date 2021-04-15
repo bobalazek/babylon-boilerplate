@@ -14,11 +14,14 @@ import { GameManager } from '../../Framework/Core/GameManager';
 import { AbstractWorld, WorldInterface } from '../../Framework/Worlds/World';
 
 export class DefaultWorld extends AbstractWorld {
+  start() {
+    super.start();
+
+    GameManager.engine.displayLoadingUI();
+  }
+
   load(): Promise<WorldInterface> {
     return new Promise((resolve) => {
-      // Show preloader
-      GameManager.engine.displayLoadingUI();
-
       const playerCharacterId = 'player';
 
       this.prepareCamera();

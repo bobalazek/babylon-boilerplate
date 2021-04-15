@@ -28,7 +28,7 @@ export abstract class AbstractNetworkWorld extends AbstractWorld {
   public networkClient: Client;
   public networkRoom: Room;
   public networkRoomSessionId: string;
-  
+
   public readonly networkPingInterval: number = 1000; // in milliseconds
   public readonly networkInterpolationSmooting: number = 0.2; // value between 0.1 to 1
   public readonly networkInterpolationLastUpdateTolerance: number = 1000; // in milliseconds; only interpolate if the last update is older less than this
