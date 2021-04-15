@@ -16,7 +16,7 @@ export interface WorldInterface {
   afterLoadObservable: Observable<WorldInterface>;
   controller: ControllerInterface;
   start(): void;
-  load(): Promise<any>;
+  load(): Promise<WorldInterface>;
   update(): void;
   setController(controller: ControllerInterface): void;
   setActiveCamera(camera: Camera): void;
@@ -31,7 +31,7 @@ export abstract class AbstractWorld implements WorldInterface {
     this.scene = new Scene(GameManager.engine);
   }
 
-  load() {
+  load(): Promise<WorldInterface> {
     return new Promise((resolve) => {
       // Do your own logic here
 

@@ -14,6 +14,7 @@ import {
 import store from 'store';
 
 import { GameManager } from '../../Framework/Core/GameManager';
+import { WorldInterface } from '../../Framework/Worlds/World';
 import { AbstractNetworkWorld } from '../../Framework/Worlds/NetworkWorld';
 import { RoomState } from '../../Framework/Network/Schemas/RoomState';
 import { Transform } from '../../Framework/Network/Schemas/Transform';
@@ -26,7 +27,7 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
   public networkHost: string = GAME_SERVER_HOST;
   public networkPort: number = GAME_SERVER_PORT;
 
-  load() {
+  load(): Promise<WorldInterface> {
     return new Promise((resolve) => {
       // Show preloader
       GameManager.engine.displayLoadingUI();
@@ -38,7 +39,7 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
 
       // Hide preloader
       GameManager.engine.hideLoadingUI();
-      
+
       // Force pointer lock
       GameManager.inputManager.setForcePointerLock(true);
 

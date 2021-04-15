@@ -11,10 +11,10 @@ import {
 import { SkyMaterial } from 'babylonjs-materials';
 
 import { GameManager } from '../../Framework/Core/GameManager';
-import { AbstractWorld } from '../../Framework/Worlds/World';
+import { AbstractWorld, WorldInterface } from '../../Framework/Worlds/World';
 
 export class DefaultWorld extends AbstractWorld {
-  load() {
+  load(): Promise<WorldInterface> {
     return new Promise((resolve) => {
       // Show preloader
       GameManager.engine.displayLoadingUI();
@@ -35,7 +35,7 @@ export class DefaultWorld extends AbstractWorld {
       resolve(this);
     });
   }
-  
+
   prepareCamera() {
     let camera = new ArcRotateCamera(
       'camera',
