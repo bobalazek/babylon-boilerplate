@@ -10,14 +10,13 @@ import {
 } from 'babylonjs';
 import { SkyMaterial } from 'babylonjs-materials';
 
-import { GameManager } from '../../Framework/Core/GameManager';
 import { AbstractWorld, WorldInterface } from '../../Framework/Worlds/World';
 
 export class DefaultWorld extends AbstractWorld {
   start() {
     super.start();
 
-    GameManager.engine.displayLoadingUI();
+    this.scene.getEngine().displayLoadingUI();
   }
 
   load(): Promise<WorldInterface> {
@@ -33,7 +32,7 @@ export class DefaultWorld extends AbstractWorld {
       );
 
       // Hide preloader
-      GameManager.engine.hideLoadingUI();
+      this.scene.getEngine().hideLoadingUI();
 
       resolve(this);
     });

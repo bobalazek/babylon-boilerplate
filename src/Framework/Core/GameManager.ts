@@ -147,7 +147,7 @@ export class GameManager {
     this.world.start();
 
     return new Promise((resolve) => {
-      this.world.load().then((loadedWorld: WorldInterface) => {
+      return this.world.load().then((loadedWorld: WorldInterface) => {
         this.scene = loadedWorld.scene;
 
         loadedWorld.afterLoadObservable.notifyObservers(loadedWorld);

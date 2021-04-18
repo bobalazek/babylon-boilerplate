@@ -30,7 +30,7 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
   start() {
     super.start();
 
-    GameManager.engine.displayLoadingUI();
+    this.scene.getEngine().displayLoadingUI();
   }
 
   load(): Promise<WorldInterface> {
@@ -41,7 +41,7 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
       this.prepareNetwork();
 
       // Hide preloader
-      GameManager.engine.hideLoadingUI();
+      this.scene.getEngine().hideLoadingUI();
 
       // Force pointer lock
       GameManager.inputManager.setForcePointerLock(true);

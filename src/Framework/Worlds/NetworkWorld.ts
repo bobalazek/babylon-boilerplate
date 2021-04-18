@@ -10,9 +10,6 @@ import {
 import store from 'store';
 
 import {
-  GameManager,
-} from '../Core/GameManager';
-import {
   AbstractWorld,
 } from './World';
 import {
@@ -81,9 +78,9 @@ export abstract class AbstractNetworkWorld extends AbstractWorld {
   }
 
   prepareNetworkToReplicateTransformsMovement() {
-    GameManager.scene.onBeforeRenderObservable.add(() => {
+    this.scene.onBeforeRenderObservable.add(() => {
       const now = (new Date()).getTime();
-      const meshes = GameManager.scene.meshes;
+      const meshes = this.scene.meshes;
 
       for (let i = 0; i < meshes.length; i++) {
         let mesh = meshes[i];
@@ -137,7 +134,7 @@ export abstract class AbstractNetworkWorld extends AbstractWorld {
     let lastUpdateTimeAgo = 0;
     let lastTransformNodeMatrix = null;
 
-    GameManager.scene.onAfterRenderObservable.add(() => {
+    this.scene.onAfterRenderObservable.add(() => {
       const now = (new Date()).getTime();
       lastUpdateTimeAgo += now - lastUpdate;
 
@@ -165,7 +162,7 @@ export abstract class AbstractNetworkWorld extends AbstractWorld {
     let lastUpdate = 0;
     let lastUpdateTimeAgo = 0;
 
-    GameManager.scene.onAfterRenderObservable.add(() => {
+    this.scene.onAfterRenderObservable.add(() => {
       const now = (new Date()).getTime();
       lastUpdateTimeAgo += now - lastUpdate;
 
