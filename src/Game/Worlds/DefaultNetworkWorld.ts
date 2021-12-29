@@ -2,7 +2,6 @@ import {
   ArcRotateCamera,
   Vector3,
   HemisphericLight,
-  Mesh,
   MeshBuilder,
   StandardMaterial,
   Tools,
@@ -26,6 +25,7 @@ import {
 export class DefaultNetworkWorld extends AbstractNetworkWorld {
   public networkHost: string = GAME_SERVER_HOST;
   public networkPort: number = GAME_SERVER_PORT;
+  public GROUND_SIZE: number = 1024;
 
   start() {
     super.start();
@@ -79,7 +79,9 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
 
   prepareEnvironment() {
     // Skybox
-    let skybox = Mesh.CreateBox('skybox', 1024, this.scene);
+    let skybox = MeshBuilder.CreateBox('skybox', {
+      size: this.GROUND_SIZE,
+    }, this.scene);
     var skyboxMaterial = new SkyMaterial('skyboxMaterial', this.scene);
     skyboxMaterial.backFaceCulling = false;
     skyboxMaterial.useSunPosition = true;
@@ -88,11 +90,11 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
 
     // Ground
     let ground = MeshBuilder.CreateGround('ground', {
-      width: 128,
-      height: 128,
+      width: this.GROUND_SIZE,
+      height: this.GROUND_SIZE,
     }, this.scene);
     let groundMaterial = new StandardMaterial('groundMaterial', this.scene);
-    groundMaterial.diffuseColor = new Color3(0.2, 0.2, 0.2);
+    groundMaterial.diffuseColor = new Color3(0.4, 0.4, 0.4);
     ground.material = groundMaterial;
   }
 

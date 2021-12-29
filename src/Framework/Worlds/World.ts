@@ -1,7 +1,6 @@
 import {
   Scene,
   Observable,
-  Camera,
 } from 'babylonjs';
 
 import {

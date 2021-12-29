@@ -2,7 +2,6 @@ import {
   ArcRotateCamera,
   Vector3,
   HemisphericLight,
-  Mesh,
   MeshBuilder,
   StandardMaterial,
   Tools,
@@ -10,7 +9,10 @@ import {
 } from 'babylonjs';
 import { SkyMaterial } from 'babylonjs-materials';
 
-import { AbstractWorld, WorldInterface } from '../../Framework/Worlds/World';
+import {
+  AbstractWorld,
+  WorldInterface,
+} from '../../Framework/Worlds/World';
 
 export class DefaultWorld extends AbstractWorld {
   start() {
@@ -66,7 +68,9 @@ export class DefaultWorld extends AbstractWorld {
 
   prepareEnvironment() {
     // Skybox
-    let skybox = Mesh.CreateBox('skybox', 1024, this.scene);
+    let skybox = MeshBuilder.CreateBox('skybox', {
+      size: 1024,
+    }, this.scene);
     var skyboxMaterial = new SkyMaterial('skyboxMaterial', this.scene);
     skyboxMaterial.backFaceCulling = false;
     skyboxMaterial.useSunPosition = true;
