@@ -22,7 +22,7 @@ import {
 export class InputMouse implements InputDeviceInterface {
   public moveObservable = new Observable<MouseEvent | PointerEvent>();
   public upDownObservable = new Observable<MouseEvent | PointerEvent>();
-  public wheelObservable = new Observable<MouseWheelEvent>();
+  public wheelObservable = new Observable<WheelEvent>();
 
   private _bindings: InputBindingsInterface = new AbstractInputBindings();
   private _axesMap: { [key: string]: InputMappingAxisMouseDataInterface } = {}; // ex.: [ moveForward: { axis: 0, scale: 1.0 } ]
@@ -238,7 +238,7 @@ export class InputMouse implements InputDeviceInterface {
     this.upDownObservable.notifyObservers(e);
   }
 
-  private _onHandleWheel(e: MouseWheelEvent) {
+  private _onHandleWheel(e: WheelEvent) {
     const deltaY = e.deltaY;
 
     const axisKeys = Object.keys(this._axesMap);

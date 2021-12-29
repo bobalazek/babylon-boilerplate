@@ -90,7 +90,7 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
     let ground = MeshBuilder.CreateGround('ground', {
       width: 128,
       height: 128,
-    });
+    }, this.scene);
     let groundMaterial = new StandardMaterial('groundMaterial', this.scene);
     groundMaterial.diffuseColor = new Color3(0.2, 0.2, 0.2);
     ground.material = groundMaterial;
@@ -135,47 +135,13 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
 
     // Transforms
     this.networkRoom.onStateChange.once((state: RoomState) => {
-      for (let i = 0; i < state.transforms.length; i++) {
-        this.prepareNetworkTransform(state.transforms[i]);
-      }
+      state.transforms.forEach((transform) => {
+        this.prepareNetworkTransform(transform);
+      });
     });
 
-    networkRoomState.transforms.onAdd = (transform: Transform, key: string) => {
+    networkRoomState.transforms.onAdd = (transform: Transform) => {
       this.prepareNetworkTransform(transform);
-    };
-
-    networkRoomState.transforms.onChange = (transform: Transform, key: string) => {
-      if (transform.sessionId === this.networkRoomSessionId) {
-        return;
-      }
-
-      let transformNode = this.scene.getMeshByID(transform.id);
-      if (!transformNode) {
-        return;
-      }
-
-      if (
-        !transformNode.metadata ||
-        !transformNode.metadata.network
-      ) {
-        this.prepareTransformNodeNetworkMetadata(transformNode);
-      }
-
-      const serverData = {
-        position: new Vector3(
-          transform.position.x,
-          transform.position.y,
-          transform.position.z
-        ),
-        rotation: new Vector3(
-          transform.rotation.x,
-          transform.rotation.y,
-          transform.rotation.z
-        ),
-      };
-
-      transformNode.metadata.network.serverData = serverData;
-      transformNode.metadata.network.serverLastUpdate = (new Date()).getTime();
     };
 
     networkRoomState.transforms.onRemove = (transform: Transform, key: string) => {
@@ -190,9 +156,14 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
 
   prepareNetworkTransform(transform: Transform) {
     if (transform.type === 'player') {
+      const existingTransform = this.scene.getNodeById(transform.id);
+      if (existingTransform) {
+        return;
+      }
+
       let transformMesh = MeshBuilder.CreateCylinder(transform.id, {
         height: 2,
-      });
+      }, this.scene);
 
       transformMesh.position = new Vector3(
         transform.position.x,
@@ -208,6 +179,45 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
       if (transform.sessionId === this.networkRoomSessionId) {
         this.controller.posessTransformNode(transformMesh);
         this.prepareNetworkReplicateMovementForLocalTransform(transformMesh);
+      } else {
+
+        if (
+          !transformMesh.metadata ||
+          !transformMesh.metadata.network
+        ) {
+          this.prepareTransformNodeNetworkMetadata(transformMesh);
+        }
+
+        transformMesh.metadata.network.serverData = {
+          position: new Vector3(
+            transform.position.x,
+            transform.position.y,
+            transform.position.z
+          ),
+          rotation: new Vector3(
+            transform.rotation.x,
+            transform.rotation.y,
+            transform.rotation.z
+          ),
+        };
+
+        transform.rotation.onChange = (changes) => {
+          let newValue = transformMesh.rotation.clone();
+          changes.forEach((change) => {
+            newValue[change.field] = change.value;
+          });
+          transformMesh.metadata.network.serverData.rotation = newValue;
+          transformMesh.metadata.network.serverLastUpdate = (new Date()).getTime();
+        };
+
+        transform.position.onChange = (changes) => {
+          let newValue = transformMesh.position.clone();
+          changes.forEach((change) => {
+            newValue[change.field] = change.value;
+          });
+          transformMesh.metadata.network.serverData.position = newValue;
+          transformMesh.metadata.network.serverLastUpdate = (new Date()).getTime();
+        };
       }
     }
   }

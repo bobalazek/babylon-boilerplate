@@ -49,7 +49,10 @@ export abstract class AbstractRoom extends Room {
   }
 
   onJoin(client: Client, options: any, auth: any) {
-    this.state.addPlayer(client.sessionId, 'John Doe');
+    this.state.addPlayer(
+      client.sessionId,
+      'John Doe #' + client.sessionId
+    );
   }
 
   async onLeave(client: Client, consented: boolean) {

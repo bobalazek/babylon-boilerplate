@@ -39,7 +39,7 @@ export class InputManager {
   public isTouchDevice: boolean = (
     'ontouchstart' in window ||
     navigator.maxTouchPoints > 0 ||
-    navigator.msMaxTouchPoints > 0
+    (<any>navigator).msMaxTouchPoints > 0
   );
 
   constructor() {

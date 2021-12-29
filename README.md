@@ -40,9 +40,7 @@ All your worlds should go inside the `src/Game/Worlds/` directory. Your world cl
 
 ### Model/texture usage
 
-Because we always want to get the newest assets, especially when they change, we can do that easily by just adding the following:
-
-In your world file, import the asset as following:
+Because we always want to get the newest assets, especially when they change, we can do that easily by just adding the following into your world file:
 
 ```javascript
 import vehicleModelUrl from '../../Resources/models/vehicle.glb';

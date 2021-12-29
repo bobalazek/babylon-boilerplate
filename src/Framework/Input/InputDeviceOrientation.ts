@@ -23,7 +23,7 @@ export class InputDeviceOrientation implements InputDeviceInterface {
   public gamma: number;
   public acceleration: DeviceMotionEventAcceleration;
   public accelerationIncludingGravity: DeviceMotionEventAcceleration;
-  public rotationRate: DeviceRotationRate;
+  public rotationRate: DeviceMotionEventRotationRate;
   public interval: number;
 
   private _bindings: InputBindingsInterface = new AbstractInputBindings();

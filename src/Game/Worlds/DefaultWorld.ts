@@ -77,7 +77,7 @@ export class DefaultWorld extends AbstractWorld {
     let ground = MeshBuilder.CreateGround('ground', {
       width: 128,
       height: 128,
-    });
+    }, this.scene);
     let groundMaterial = new StandardMaterial('groundMaterial', this.scene);
     groundMaterial.diffuseColor = new Color3(0.2, 0.2, 0.2);
     ground.material = groundMaterial;
@@ -90,7 +90,7 @@ export class DefaultWorld extends AbstractWorld {
   preparePlayer(playerCharacterId: string = 'player') {
     let playerCharacter = MeshBuilder.CreateCylinder(playerCharacterId, {
       height: 2,
-    });
+    }, this.scene);
     playerCharacter.position.y = 1;
   }
 }
