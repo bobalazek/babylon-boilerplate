@@ -25,7 +25,7 @@ import {
 export class DefaultNetworkWorld extends AbstractNetworkWorld {
   public networkHost: string = GAME_SERVER_HOST;
   public networkPort: number = GAME_SERVER_PORT;
-  public GROUND_SIZE: number = 1024;
+  public GROUND_SIZE: number = 128;
 
   start() {
     super.start();
