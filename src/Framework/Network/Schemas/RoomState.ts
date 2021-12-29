@@ -71,16 +71,16 @@ export class RoomState extends Schema {
     );
   }
 
-  removePlayer(id: string) {
-    const player = this.players[id];
+  removePlayer(sessionId: string) {
+    const player = this.players.get(sessionId);
     if (player) {
-      for (let transformId in this.transforms) {
-        if (this.transforms[transformId].sessionId === id) {
-          delete this.transforms[transformId];
+      this.transforms.forEach((transform, transformId) => {
+        if (transform.sessionId === sessionId) {
+          this.transforms.delete(transformId);
         }
-      }
+      });
 
-      delete this.players[id];
+      this.players.delete(sessionId);
     }
   }
 
@@ -105,12 +105,13 @@ export class RoomState extends Schema {
   }
 
   setTransform(id: string, transformMatrix: any) {
-    this.transforms[id].position.set(transformMatrix.position);
-    this.transforms[id].rotation.set(transformMatrix.rotation);
+    const transform = this.transforms.get(id);
+    transform.position.set(transformMatrix.position);
+    transform.rotation.set(transformMatrix.rotation);
   }
 
   removeTransform(id: string) {
-    delete this.transforms[id]; // TODO: set to undefined, as it's faster?
+    this.transforms.delete(id);
   }
 
   /***** Chat message *****/

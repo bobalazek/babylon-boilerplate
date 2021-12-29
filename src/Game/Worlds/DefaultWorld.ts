@@ -28,7 +28,7 @@ export class DefaultWorld extends AbstractWorld {
       this.prepareEnvironment();
       this.preparePlayer(playerCharacterId);
       this.controller.posessTransformNode(
-        this.scene.getMeshByID(playerCharacterId)
+        this.scene.getMeshById(playerCharacterId)
       );
 
       // Hide preloader

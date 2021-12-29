@@ -13,6 +13,9 @@ export class Player extends Schema {
   @type("boolean")
   connected: boolean = true;
 
+  @type("uint64")
+  disconnectedSince: number = 0;
+
   @type("boolean")
   ready: boolean = false;
 

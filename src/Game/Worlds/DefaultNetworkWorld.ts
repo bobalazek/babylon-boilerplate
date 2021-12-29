@@ -135,7 +135,7 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
 
     // Transforms
     this.networkRoom.onStateChange.once((state: RoomState) => {
-      state.transforms.forEach((transform) => {
+      state.transforms.forEach((transform: Transform) => {
         this.prepareNetworkTransform(transform);
       });
     });
@@ -144,13 +144,8 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
       this.prepareNetworkTransform(transform);
     };
 
-    networkRoomState.transforms.onRemove = (transform: Transform, key: string) => {
-      let transformNode = this.scene.getMeshByID(transform.id);
-      if (!transformNode) {
-        return;
-      }
-
-      transformNode.dispose();
+    networkRoomState.transforms.onRemove = (transform: Transform) => {
+      this.scene.getMeshById(transform.id)?.dispose();
     };
   }
 
@@ -180,7 +175,7 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
         this.controller.posessTransformNode(transformMesh);
         this.prepareNetworkReplicateMovementForLocalTransform(transformMesh);
       } else {
-
+        // Sync metadata
         if (
           !transformMesh.metadata ||
           !transformMesh.metadata.network
