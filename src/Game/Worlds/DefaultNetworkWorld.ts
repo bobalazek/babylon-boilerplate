@@ -25,7 +25,7 @@ import {
 export class DefaultNetworkWorld extends AbstractNetworkWorld {
   public networkHost: string = GAME_SERVER_HOST;
   public networkPort: number = GAME_SERVER_PORT;
-  public GROUND_SIZE: number = 128;
+  public groundSize: number = 128;
 
   start() {
     super.start();
@@ -80,7 +80,7 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
   prepareEnvironment() {
     // Skybox
     let skybox = MeshBuilder.CreateBox('skybox', {
-      size: this.GROUND_SIZE,
+      size: this.groundSize,
     }, this.scene);
     var skyboxMaterial = new SkyMaterial('skyboxMaterial', this.scene);
     skyboxMaterial.backFaceCulling = false;
@@ -90,8 +90,8 @@ export class DefaultNetworkWorld extends AbstractNetworkWorld {
 
     // Ground
     let ground = MeshBuilder.CreateGround('ground', {
-      width: this.GROUND_SIZE,
-      height: this.GROUND_SIZE,
+      width: this.groundSize,
+      height: this.groundSize,
     }, this.scene);
     let groundMaterial = new StandardMaterial('groundMaterial', this.scene);
     groundMaterial.diffuseColor = new Color3(0.4, 0.4, 0.4);
